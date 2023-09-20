@@ -1,6 +1,7 @@
 'use strict';
 
 const results = document.getElementById('results');
+const title = document.getElementById('title');
 
 function appendDOM(text) {
     const p = document.createElement('p');
@@ -16,11 +17,13 @@ class Warrior {
     }
 
     static welcomeMessage() {
-        appendDOM(`Welcome to the Warrior Game`);
+        const h1 = document.createElement('h1');
+        h1.innerText = 'Welcome to the Warrior Game';
+        title.append(h1);
     }
 
     greet() {
-        appendDOM(`Hello, my name is ${this.characterName}`);
+        appendDOM(`"Hello, my name is ${this.characterName}"`);
     }
 
     attack(attacker) {
@@ -31,13 +34,13 @@ class Warrior {
 
 class Hero extends Warrior {
     announce() {
-        appendDOM(`Greetings. Your hero, ${this.characterName}, has arrived!`);
+        appendDOM(`"Greetings. Your hero, ${this.characterName}, has arrived!"`);
     }
 };
 
 class Villian extends Warrior {
     taunt() {
-        appendDOM(`Lol. I, ${this.characterName}, am stronger than you all!`);
+        appendDOM(`"Lol. I, ${this.characterName}, am stronger than you all!"`);
     }
 };
 
