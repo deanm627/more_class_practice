@@ -15,6 +15,10 @@ class Warrior {
         this.power = power;
     }
 
+    static welcomeMessage() {
+        appendDOM(`Welcome to the Warrior Game`);
+    }
+
     greet() {
         appendDOM(`Hello, my name is ${this.characterName}`);
     }
@@ -40,6 +44,7 @@ class Villian extends Warrior {
 const eleven = new Hero('Eleven');
 const one = new Villian('One');
 
+Warrior.welcomeMessage();
 eleven.announce();
 one.taunt();
 one.attack(eleven);
