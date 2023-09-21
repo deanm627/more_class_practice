@@ -1,0 +1,39 @@
+#title {
+    text-align: center;
+}
+
+main {
+    width: 700px;
+    height: 500px;
+}
+
+#results {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.message {
+    margin: 10px;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+}
+
+.hero {
+    color: white;
+    background-color: blue;
+}
+
+.villain {
+    color: black;
+    background-color: red;
+}
+
+.zombie {
+    color: black;
+    background-color: green;
+}
+

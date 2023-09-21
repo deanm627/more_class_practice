@@ -3,11 +3,15 @@
 const results = document.getElementById('results');
 const title = document.getElementById('title');
 
-function appendDOM(text) {
-    const p = document.createElement('p');
-    p.innerText = text;
-    results.appendChild(p);
+function appendDOM(text, className) {
+    const message = document.createElement('div');
+    message.classList.add(className);
+    message.classList.add('message');
+    message.innerText = text;
+    results.appendChild(message);
 };
+
+let trackState = {hero: null, villain: null};
 
 class Warrior {
     constructor(characterName, details, health = 10, power = 5) {
@@ -26,29 +30,66 @@ class Warrior {
         appendDOM(`"Hello, my name is ${this.characterName}"`);
     }
 
-    attack(attacker) {
+    attackedBy(attacker) {
         this.health = this.health - attacker.power;
-        appendDOM(`${attacker.characterName} attacks ${this.characterName}.\nNew health value for ${this.characterName} is ${this.health}.`);
+        appendDOM(`${attacker.characterName} attacks ${this.characterName}.`, attacker.warriorType);
+        appendDOM(`New health value for ${this.characterName} is ${this.health}.`, this.warriorType);
+    }
+
+    alive() {
+        return this.health > 0;
     }
 };
 
 class Hero extends Warrior {
+    constructor(characterName, details, health, power, warriorType) {
+        super(characterName, details, health, power);
+        this.warriorType = warriorType;
+    }
     announce() {
-        appendDOM(`"Greetings. Your hero, ${this.characterName}, has arrived!"`);
+        appendDOM(`"Greetings. Your hero, ${this.characterName}, has arrived!"`, this.warriorType);
     }
 };
 
-class Villian extends Warrior {
+class Villain extends Warrior {
+    constructor(characterName, details, health, power, warriorType) {
+        super(characterName, details, health, power);
+        this.warriorType = warriorType;
+    }
     taunt() {
-        appendDOM(`"Lol. I, ${this.characterName}, am stronger than you all!"`);
+        appendDOM(`"Lol. I, ${this.characterName}, am stronger than you all!"`, this.warriorType);
     }
 };
 
-const eleven = new Hero('Eleven');
-const one = new Villian('One');
+class Zombie extends Villain {
+    alive() {
+        return true;
+    }
+}
+
+const eleven = new Hero('Eleven', null, 10, 5, 'hero');
+const one = new Villain('One', null, 10, 5, 'villain');
+const zombie = new Zombie('Zombie', null, 10, 5, 'zombie');
 
 Warrior.welcomeMessage();
 eleven.announce();
 one.taunt();
-one.attack(eleven);
-eleven.attack(one);
+one.attackedBy(eleven);
+eleven.attackedBy(one);
+console.log(eleven.alive());
+console.log(one.alive());
+one.attackedBy(eleven);
+
+let enemiesArr = [one, zombie];
+let random = getRandomInt(enemiesArr.length);
+console.log(random);
+eleven.attackedBy(enemiesArr[random]);
+
+trackState.hero = eleven;
+trackState.villain = one;
+console.log(trackState.hero.health);
+console.log(trackState.villain.health);
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
