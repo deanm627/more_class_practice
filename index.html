@@ -7,40 +7,31 @@
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div id="title"></div>
     <main>
+        <h1>The Incredible R-P-S!</h1>
         <div id="firstDiv">
             <form id="pickPlayers">
-                <select class="first" id="heroList">
+                <select class="select" id="heroList">
                     <option>Choose Hero</option>
                     <option>Mr. Incredible</option>
                     <option>Elastigirl</option>
                     <option>Frozone</option>
                 </select>
-                <select class="first" id="villainList">
+                <select class="select" id="villainList">
                     <option>Choose Villain</option>
                     <option>Syndrome</option>
                     <option>The Underminer</option>
                     <option>Screenslaver</option>
                 </select>
-                <button class="first" id="firstButton" type="submit">Select Characters</button>
+                <button class="select button" id="firstButton" type="submit">Select Characters</button>
             </form>
             <div class ="characterDisplay">
-                <figure class="figure" id="heroResult"></figure>
-                <figure class="figure" id="villainResult"></figure>
             </div>
         </div>
         <div>
-            <form>
-                <select id="weaponList">
-                <option>Weapon</option>
-                <option value="1">Rock</option>
-                <option value="2">Paper</option>
-                <option value="3">Scissors</option>
-            </select>
-        </form>
+            <div id="results"></div>
+            <form id="pickWeapon"></form>
         </div>
-        <div id="results"></div>
     </main>
 <script src="./scripts/index.js"></script>
 </body>
