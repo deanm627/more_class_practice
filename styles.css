@@ -19,10 +19,16 @@ h1 {
     font-size: 3rem;
 }
 
+h2 {
+    font-size: 2rem;
+    font-weight: 300;
+}
+
 main {
     width: 80vw;
     height: 120vh;
     margin: 0 auto;
+    position: relative;
 }
 
 #pickPlayers {
@@ -47,11 +53,13 @@ main {
 }
 
 .button {
-    background-color: rgba(141, 255, 230, 0.5);
+    color: white;
+    background-color: rgba(22, 176, 99, 0.7);
     grid-column: 1 / span 3;
     width: 15%;
-    height: 5vh;
+    height: 8vh;
     border: 1px solid rgb(54, 54, 54);
+    border-radius: 3%;
 }
 
 .singleList {
@@ -68,7 +76,7 @@ main {
 
 .figure {
     height: 40vh;
-    max-height: 333px;
+    min-height: 333px;
     width: 45vw;
     max-width: 500px;
     display: grid;
@@ -126,4 +134,53 @@ main {
     margin: 0 auto;
     width: 33vw;
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+.modal {
+    height: 50%;
+    min-height: 475px;
+    width: 50%;
+    min-width: 600px;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    color: white;
+    background-color: rgb(22, 176, 99);
+    border: 1px solid rgb(54, 54, 54);
+    text-align: center;
+    z-index: 2;
+    border-radius: 5%;
+}
+
+.modalText {
+    font-size: 1.4rem;
+    line-height: 1.5;
+    font-weight: 200;
+}
+
+.closeButton {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.overlay {
+    background-color:rgba(0, 0, 0, 0.9);
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hidden {
+    display: none;
 }

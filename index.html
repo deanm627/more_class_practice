@@ -8,6 +8,19 @@
 </head>
 <body>
     <main>
+        <div id="welcomeModal">
+            <section class="welcomeModal modal hidden">
+                <button class="welcomeCloseButton closeButton">⨉</button>
+                <div>
+                  <h2>Welcome to the Incredible<br>Rock-Paper-Scissors Game!</h2>
+                  <img src="./images/logo.png" />
+                  <p class="modalText">
+                    Select two characters, each will start with 30 points.<br>Each round is worth 5 points.<br>Good luck!
+                  </p>
+                </div>
+            </section>
+            <div class="welcomeOverlay overlay hidden"></div>
+        </div>
         <h1>The Incredible R-P-S!</h1>
         <div id="firstDiv">
             <form id="pickPlayers">
@@ -31,6 +44,19 @@
         <div>
             <div id="results"></div>
             <form id="pickWeapon"></form>
+        </div>
+        <div id="zombieModal">
+            <section class="zombieModal modal hidden">
+                <button class="zombieCloseButton closeButton">⨉</button>
+                <div>
+                  <h2><b><i>Zombie</i></b> Round!</h2>
+                  <img src="./images/zombie.jpeg" />
+                  <p class="modalText">
+                    <b>+5 points</b> if you win<br><b>-10 points</b> if you lose
+                  </p>
+                </div>
+            </section>
+            <div class="zombieOverlay overlay hidden"></div>
         </div>
     </main>
 <script src="./scripts/index.js"></script>

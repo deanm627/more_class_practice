@@ -4,8 +4,14 @@ const characterDisplay = document.querySelector('.characterDisplay');
 const pickPlayers = document.getElementById('pickPlayers');
 const pickWeapon = document.getElementById('pickWeapon');
 const results = document.getElementById('results');
+const zombieModal = document.querySelector('.zombieModal');
+const zombieOverlay = document.querySelector('.zombieOverlay');
+const zombieCloseButton = document.querySelector('.zombieCloseButton');
+const welcomeModal = document.querySelector('.welcomeModal');
+const welcomeOverlay = document.querySelector('.welcomeOverlay');
+const welcomeCloseButton = document.querySelector('.welcomeCloseButton');
 
-let trackState = {hero: null, villain: null};
+let trackState = {hero: null, villain: null, zombie: null};
 
 const mrincredTheme = "Mr. Incredible, Incredible\nIncredible\nCatching the bad guys\nPow, pow, pow!";
 const mrincredPic = "./images/mrincred.jpeg";
@@ -19,6 +25,7 @@ const underminerTheme = "I'm the Underminer!\nMeet Jack Hammer!";
 const underminerPic = "./images/underminer.jpeg";
 const screenslaverTheme = "The Screenslaver interrupts\nthis program for an\nimportant announcement.";
 const screenslaverPic = "./images/screenslaver.jpeg";
+const zombiePic = "./images/zombie.jpeg";
 
 function appendDOM(text, className, location, imageref, health, captionClass) {
     const figure = document.createElement('figure');
@@ -45,7 +52,168 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 };
 
-function playGame(hero, villain) {
+function produceResultsVillain(hero, villain, userPick, villainPick, points, outcome, fontSpecifier) {
+    characterDisplay.innerHTML = "";
+    hero.announce(userPick, fontSpecifier);
+    villain.taunt(villainPick, fontSpecifier);
+    results.innerText = "";
+    if (userPick === villainPick) {
+        outcome.innerText = "It's a tie! Play again";
+        results.appendChild(outcome);
+        return;
+    }
+    if (userPick === 'Rock' && villainPick === 'Paper') {
+        outcome.innerText = "Paper covers rock! Your health took a hit!";
+        results.appendChild(outcome);
+        trackState.hero.health -= points;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        villain.taunt(villainPick, fontSpecifier);
+        return;
+    }
+    if (userPick === 'Rock' && villainPick === 'Scissors') {
+        outcome.innerText = "Rock smashes scissors! You win this round!";
+        results.appendChild(outcome);
+        trackState.villain.health -= points;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        villain.taunt(villainPick, fontSpecifier);
+        return;
+    }
+    if (userPick === 'Paper' && villainPick === 'Rock') {
+        outcome.innerText = "Paper covers rock! You win this round!";
+        results.appendChild(outcome);
+        trackState.villain.health -= points;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        villain.taunt(villainPick, fontSpecifier);
+        return;
+    }
+    if (userPick === 'Paper' && villainPick === 'Scissors') {
+        outcome.innerText = "Scissors cut paper! Your health took a hit!";
+        results.appendChild(outcome);
+        trackState.hero.health -= points;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        villain.taunt(villainPick, fontSpecifier);
+        return;
+    }
+    if (userPick === 'Scissors' && villainPick === 'Rock') {
+        outcome.innerText = "Rock smashes scissors! Your health took a hit!";
+        results.appendChild(outcome);
+        trackState.hero.health -= points;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        villain.taunt(villainPick, fontSpecifier);
+        return;
+    }
+    if (userPick === 'Scissors' && villainPick === 'Paper') {
+        outcome.innerText = "Scissors cut paper! You win this round!";
+        results.appendChild(outcome);
+        trackState.villain.health -= points;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        villain.taunt(villainPick, fontSpecifier);
+        return;
+    }
+};
+
+function produceResultsZombie(hero, zombie, userPick, villainPick, points, outcome, fontSpecifier) {
+    console.log("produceresultszombie function called");
+    characterDisplay.innerHTML = "";
+    hero.announce(userPick, fontSpecifier);
+    zombie.taunt(villainPick, fontSpecifier);
+    results.innerText = "";
+    if (userPick === villainPick) {
+        outcome.innerText = "It's a tie! Play again";
+        results.appendChild(outcome);
+        return;
+    }
+    if (userPick === 'Rock' && villainPick === 'Paper') {
+        outcome.innerText = "Paper covers rock! Your health took a hit!";
+        results.appendChild(outcome);
+        trackState.hero.health -= points;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        zombie.taunt(villainPick, fontSpecifier);
+        return;
+    }
+    if (userPick === 'Rock' && villainPick === 'Scissors') {
+        outcome.innerText = "Rock smashes scissors! You win this round!";
+        results.appendChild(outcome);
+        trackState.hero.health += points / 2;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        zombie.taunt(villainPick, fontSpecifier);
+        return;
+    }
+    if (userPick === 'Paper' && villainPick === 'Rock') {
+        outcome.innerText = "Paper covers rock! You win this round!";
+        results.appendChild(outcome);
+        trackState.hero.health += points / 2;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        zombie.taunt(villainPick, fontSpecifier);
+        return;
+    }
+    if (userPick === 'Paper' && villainPick === 'Scissors') {
+        outcome.innerText = "Scissors cut paper! Your health took a hit!";
+        results.appendChild(outcome);
+        trackState.hero.health -= points;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        zombie.taunt(villainPick, fontSpecifier);
+        return;
+    }
+    if (userPick === 'Scissors' && villainPick === 'Rock') {
+        outcome.innerText = "Rock smashes scissors! Your health took a hit!";
+        results.appendChild(outcome);
+        trackState.hero.health -= points;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        zombie.taunt(villainPick, fontSpecifier);
+        return;
+    }
+    if (userPick === 'Scissors' && villainPick === 'Paper') {
+        outcome.innerText = "Scissors cut paper! You win this round!";
+        results.appendChild(outcome);
+        trackState.hero.health += points / 2;
+        characterDisplay.innerHTML = "";
+        hero.announce(userPick, fontSpecifier);
+        zombie.taunt(villainPick, fontSpecifier);
+        return;
+    }
+};
+
+function testGameOver(hero, villain, outcome) {
+    if (!hero.alive()) {
+        results.innerText = "";
+        outcome.innerText = "Game over. Better luck next time!";
+        results.appendChild(outcome);
+        pickPlayers.reset();
+        pickWeapon.innerHTML = "";
+        return;
+    }
+    if (!villain.alive()) {
+        results.innerText = "";
+        outcome.innerText = "You win! Congrats!";
+        results.appendChild(outcome);
+        pickPlayers.reset();
+        pickWeapon.innerHTML = "";
+        return;
+    }
+};
+
+function modal(modalName, overlayName, buttonName) {
+    modalName.classList.remove('hidden');
+    overlayName.classList.remove('hidden');
+    buttonName.addEventListener('click', () => {
+        modalName.classList.add('hidden');
+        overlayName.classList.add('hidden');
+    });
+};
+
+function playGame(hero, villain, zombie) {
     const weaponList = document.createElement('select');
     weaponList.classList.add('select', 'singleList');
     const defaultOption = document.createElement('option');
@@ -65,92 +233,36 @@ function playGame(hero, villain) {
     button.innerText = "Let's go!";
     pickWeapon.appendChild(button);
     const optionsArr = [option1.innerText, option2.innerText, option3.innerText];
+    const villainZombieArr = [villain, villain, villain, zombie];
     button.addEventListener('click', () => {
-        const randomNum = getRandomInt(optionsArr.length);
-        console.log(randomNum);
-        const villainPick = optionsArr[randomNum];
-        console.log(villainPick);
         if (weaponList.value === "Choose your weapon") {
             alert("Not a valid selection, please choose a weapon");
             pickWeapon.reset();
             return;
         }
-        characterDisplay.innerHTML = "";
-        hero.announce(weaponList.value, "rpsPick");
-        villain.taunt(villainPick, "rpsPick");
+        const randomNum1 = getRandomInt(optionsArr.length);
+        const villainPick = optionsArr[randomNum1];
+        const randomNum2 = getRandomInt(villainZombieArr.length);
         const outcome = document.createElement('p');
         outcome.classList.add('outcome');
-        results.innerText = "";
-        if (weaponList.value === villainPick) {
-            outcome.innerText = "It's a tie! Play again";
-            results.appendChild(outcome);
+        if (randomNum2 === 3) {
+            modal(zombieModal, zombieOverlay, zombieCloseButton);
+            produceResultsZombie(hero, zombie, weaponList.value, villainPick, trackState.zombie.power, outcome, "rpsPick");
+            setTimeout(testGameOver, 500, hero, villain, outcome);
+            return;
         }
-        if (weaponList.value === 'Rock' && villainPick === 'Paper') {
-            outcome.innerText = "Paper covers rock! Your health took a hit!";
-            results.appendChild(outcome);
-            trackState.hero.health -= 5;
-            characterDisplay.innerHTML = "";
-            hero.announce(weaponList.value, "rpsPick");
-            villain.taunt(villainPick, "rpsPick");
-        }
-        if (weaponList.value === 'Rock' && villainPick === 'Scissors') {
-            outcome.innerText = "Rock smashes scissors! You win this round!";
-            results.appendChild(outcome);
-            trackState.villain.health -= 5;
-            characterDisplay.innerHTML = "";
-            hero.announce(weaponList.value, "rpsPick");
-            villain.taunt(villainPick, "rpsPick");
-        }
-        if (weaponList.value === 'Paper' && villainPick === 'Rock') {
-            outcome.innerText = "Paper covers rock! You win this round!";
-            results.appendChild(outcome);
-            trackState.villain.health -= 5;
-            characterDisplay.innerHTML = "";
-            hero.announce(weaponList.value, "rpsPick");
-            villain.taunt(villainPick, "rpsPick");
-        }
-        if (weaponList.value === 'Paper' && villainPick === 'Scissors') {
-            outcome.innerText = "Scissors cut paper! Your health took a hit!";
-            results.appendChild(outcome);
-            trackState.hero.health -= 5;
-            characterDisplay.innerHTML = "";
-            hero.announce(weaponList.value, "rpsPick");
-            villain.taunt(villainPick, "rpsPick");
-        }
-        if (weaponList.value === 'Scissors' && villainPick === 'Rock') {
-            outcome.innerText = "Rock smashes scissors! Your health took a hit!";
-            results.appendChild(outcome);
-            trackState.hero.health -= 5;
-            characterDisplay.innerHTML = "";
-            hero.announce(weaponList.value, "rpsPick");
-            villain.taunt(villainPick, "rpsPick");
-        }
-        if (weaponList.value === 'Scissors' && villainPick === 'Paper') {
-            outcome.innerText = "Scissors cut paper! You win this round!";
-            results.appendChild(outcome);
-            trackState.villain.health -= 5;
-            characterDisplay.innerHTML = "";
-            hero.announce(weaponList.value, "rpsPick");
-            villain.taunt(villainPick, "rpsPick");
-        }
-        if (!hero.alive()) {
-            results.innerText = "";
-            outcome.innerText = "You lose! Try again";
-            results.appendChild(outcome);
-            pickPlayers.reset();
-            pickWeapon.innerHTML = "";
-        }
-        if (!villain.alive()) {
-            results.innerText = "";
-            outcome.innerText = "You win! Congrats!";
-            results.appendChild(outcome);
-            pickPlayers.reset();
-            pickWeapon.innerHTML = "";
+        if (randomNum2 !== 3) {
+            produceResultsVillain(hero, villain, weaponList.value, villainPick, trackState.villain.power, outcome, "rpsPick");
+            setTimeout(testGameOver, 500, hero, villain, outcome);
+            console.log(trackState.hero.health, trackState.villain.health);
+            return;
         }
     });
 };
 
 document.addEventListener('DOMContentLoaded',() => {
+
+    modal(welcomeModal, welcomeOverlay, welcomeCloseButton);
 
     pickPlayers.addEventListener('submit',(event) => {
         event.preventDefault();
@@ -199,14 +311,15 @@ document.addEventListener('DOMContentLoaded',() => {
             default:
                 return;
         }
-        const hero = new Hero(selectedHero, heroPic, 20, 5);
-        const villain = new Villain(selectedVillain, villainPic, 20, 5);
+        const hero = new Hero(selectedHero, heroPic, 30, 5);
+        const villain = new Villain(selectedVillain, villainPic, 30, 5);
+        const zombie = new Zombie('Zombie', zombiePic, "--", 10);
         hero.announce(heroTheme, "theme");
         villain.taunt(villainTheme, "theme");
         trackState.hero = hero;
         trackState.villain = villain;
-        console.log(trackState);
-        playGame(hero, villain);
+        trackState.zombie = zombie;
+        playGame(hero, villain, zombie);
     });
 
     class Warrior {
@@ -253,9 +366,4 @@ document.addEventListener('DOMContentLoaded',() => {
         form.reset();
     }
 
-    const eleven = new Hero('Eleven', null, 10, 5, 'hero');
-    const one = new Villain('One', null, 10, 5, 'villain');
-    const zombie = new Zombie('Zombie', null, 0, 5, 'zombie');
-
 });
-
