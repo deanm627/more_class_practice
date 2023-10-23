@@ -68,17 +68,16 @@ main {
 
 .characterDisplay {
     margin-top: 25px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    justify-items: center;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .figure {
     height: 40vh;
     min-height: 333px;
     width: 45vw;
-    max-width: 500px;
+    min-width: 500px;
+    max-width: 550px;
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: 250px 83px;
